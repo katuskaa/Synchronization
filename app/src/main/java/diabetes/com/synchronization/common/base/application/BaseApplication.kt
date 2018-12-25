@@ -5,8 +5,8 @@ import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
 import android.arch.lifecycle.ProcessLifecycleOwner
 import android.support.multidex.MultiDexApplication
-import diabetes.com.synchronization.communication.providers.ApplicationDataProvider
-import diabetes.com.synchronization.communication.providers.DataProvider
+import diabetes.com.synchronization.common.data.server.httpChannel.HttpChannel
+import diabetes.com.synchronization.communication.ApplicationServer
 
 class BaseApplication : MultiDexApplication(), LifecycleObserver {
 
@@ -14,9 +14,8 @@ class BaseApplication : MultiDexApplication(), LifecycleObserver {
         lateinit var application: BaseApplication
             private set
 
-        lateinit var applicationDataProvider: ApplicationDataProvider
+        lateinit var applicationServer: ApplicationServer
             private set
-
     }
 
     override fun onCreate() {
@@ -27,17 +26,17 @@ class BaseApplication : MultiDexApplication(), LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onApplicationCreated() {
         application = this
-        applicationDataProvider = DataProvider(this)
+        applicationServer = ApplicationServer(HttpChannel())
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onApplicationForegrounded() {
-        applicationDataProvider.connect()
+        applicationServer.connect(this)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onApplicationBackgrounded() {
-        applicationDataProvider.disconnect()
+        applicationServer.disconnect()
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)

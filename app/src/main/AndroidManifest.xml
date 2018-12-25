@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="diabetes.com.synchronization">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name="diabetes.com.synchronization.common.base.application.BaseApplication"
         android:allowBackup="false"

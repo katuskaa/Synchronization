@@ -13,7 +13,7 @@ import diabetes.com.synchronization.common.base.parameters.BaseState
 import diabetes.com.synchronization.common.base.views.BaseViewModels
 import diabetes.com.synchronization.common.base.views.BaseViews
 import diabetes.com.synchronization.common.data.transaction.ResourceStatus
-import diabetes.com.synchronization.communication.network.example.ExampleViewModel
+import diabetes.com.synchronization.communication.ApplicationViewModel
 
 
 class MainActivity : BaseApplicationActivity<MainActivity.Parameters, MainActivity.State, MainActivity.ViewModels, MainActivity.Views>(), MainFragmentHandler {
@@ -28,48 +28,42 @@ class MainActivity : BaseApplicationActivity<MainActivity.Parameters, MainActivi
     override fun setToolbar() = null
 
 
-    private fun connectionTest() {
-        val diabetesAppConnection = DiabetesAppConnection(this@MainActivity)
-
-        val checkStatus = diabetesAppConnection.checkDiabetesMApp()
-        Toast.makeText(this@MainActivity, "checkStatus = $checkStatus",  Toast.LENGTH_SHORT).show()
-    }
-
     inner class Parameters : BaseParameters {
         override fun loadParameters(extras: Bundle?) {}
     }
 
     inner class State : BaseState {
+        // TODO not relevant, just an example of usage
 
-//        val ACTUAL_FRAGMENT__BUNDLE_KEY = "ACTUAL_FRAGMENT__BUNDLE_KEY"
-//
-//        var actualFragment = -1
+        val EXAMPLE__BUNDLE_KEY = "EXAMPLE__BUNDLE_KEY"
+
+        var example = -1
 
 
         override fun saveInstanceState(outState: Bundle?) {
-//            outState?.putInt(ACTUAL_FRAGMENT__BUNDLE_KEY, this.actualFragment)
+            outState?.putInt(EXAMPLE__BUNDLE_KEY, this.example)
         }
 
         override fun restoreInstanceState(savedInstanceState: Bundle) {
-//            this.actualFragment = savedInstanceState.getInt(ACTUAL_FRAGMENT__BUNDLE_KEY)
+            this.example = savedInstanceState.getInt(EXAMPLE__BUNDLE_KEY)
         }
 
     }
 
     inner class ViewModels : BaseViewModels {
 
-        val exampleViewModel: ExampleViewModel = ViewModelProviders.of(this@MainActivity).get(ExampleViewModel::class.java)
+        val applicationViewModel: ApplicationViewModel = ViewModelProviders.of(this@MainActivity).get(ApplicationViewModel::class.java)
 
         override fun setViewModelsObservers() {
 
-            this.exampleViewModel.liveData.observe(this@MainActivity, Observer {
+            this.applicationViewModel.exampleLiveData.observe(this@MainActivity, Observer {
                 it?.let {
                     when (it.resourceStatus) {
                         ResourceStatus.SUCCESS -> {
-                            val a = 6;
+                            Toast.makeText(this@MainActivity, "success", Toast.LENGTH_SHORT).show()
                         }
                         ResourceStatus.ERROR -> {
-                            val b = 7;
+                            Toast.makeText(this@MainActivity, "error", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -88,7 +82,14 @@ class MainActivity : BaseApplicationActivity<MainActivity.Parameters, MainActivi
     override fun onActivityLoadingFinished() {}
 
     override fun synchronize() {
-        this@MainActivity.viewModels.exampleViewModel.runExampleTransaction()
+        this@MainActivity.viewModels.applicationViewModel.runExampleTransaction()
+    }
+
+    private fun connectionTest() {
+        val diabetesAppConnection = DiabetesAppConnection(this@MainActivity)
+
+        val checkStatus = diabetesAppConnection.checkDiabetesMApp()
+        Toast.makeText(this@MainActivity, "checkStatus = $checkStatus", Toast.LENGTH_SHORT).show()
     }
 
 }
