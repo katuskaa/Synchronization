@@ -12,7 +12,7 @@ class ApplicationViewModel : ViewModel() {
     val exampleLiveData = MutableLiveData<ResponseLiveData<ExampleResponseBody>>()
 
     fun runExampleTransaction() {
-        val requestData = ExampleRequestData()
+        val requestData = ExampleRequestData("example")
         BaseApplication.applicationServer.executeExampleTransaction(requestData, exampleLiveData)
     }
 }

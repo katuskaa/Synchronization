@@ -62,8 +62,12 @@ class MainActivity : BaseApplicationActivity<MainActivity.Parameters, MainActivi
                         ResourceStatus.SUCCESS -> {
                             Toast.makeText(this@MainActivity, "success", Toast.LENGTH_SHORT).show()
                         }
+
                         ResourceStatus.ERROR -> {
                             Toast.makeText(this@MainActivity, "error", Toast.LENGTH_SHORT).show()
+                        }
+
+                        else -> {
                         }
                     }
                 }
