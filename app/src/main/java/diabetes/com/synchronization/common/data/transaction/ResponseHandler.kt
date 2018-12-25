@@ -6,7 +6,6 @@ abstract class ResponseHandler<RESPONSE_BODY> {
 
     companion object {
         val UNKNOWN_ERROR_CODE = -1
-        val SOCKET_NOT_CONNECTED__ERROR_CODE = -2
     }
 
     protected abstract fun onErrorResponse(errorCode: Int)
