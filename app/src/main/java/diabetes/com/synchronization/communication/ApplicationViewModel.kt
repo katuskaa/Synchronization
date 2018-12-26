@@ -4,15 +4,32 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import diabetes.com.synchronization.common.base.application.BaseApplication
 import diabetes.com.synchronization.common.data.transaction.ResponseLiveData
+import diabetes.com.synchronization.communication.network.entries.getEntries.GetEntriesRequestData
+import diabetes.com.synchronization.communication.network.entries.getEntries.GetEntriesResponseBody
 import diabetes.com.synchronization.communication.network.example.ExampleRequestData
 import diabetes.com.synchronization.communication.network.example.ExampleResponseBody
+import diabetes.com.synchronization.communication.network.treatments.getTreatments.GetTreatmentsRequestData
+import diabetes.com.synchronization.communication.network.treatments.getTreatments.GetTreatmentsResponseBody
 
 class ApplicationViewModel : ViewModel() {
 
     val exampleLiveData = MutableLiveData<ResponseLiveData<ExampleResponseBody>>()
+    val getTreatmentsLiveData = MutableLiveData<ResponseLiveData<Array<GetTreatmentsResponseBody>>>()
+    val getEntriesLiveData = MutableLiveData<ResponseLiveData<Array<GetEntriesResponseBody>>>()
 
     fun runExampleTransaction() {
         val requestData = ExampleRequestData("example")
         BaseApplication.applicationServer.executeExampleTransaction(requestData, exampleLiveData)
     }
+
+    fun runGetTreatmentsTransaction(count: Int) {
+        val requestData = GetTreatmentsRequestData(count)
+        BaseApplication.applicationServer.executeGetTreatmentsTransaction(requestData, getTreatmentsLiveData)
+    }
+
+    fun runGetEntriesTransaction() {
+        val requestData = GetEntriesRequestData()
+        BaseApplication.applicationServer.executeGetEntriesTransaction(requestData, getEntriesLiveData)
+    }
+
 }

@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "diabetes.com.synchronizatio"
+        applicationId "diabetes.com.synchronization"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
@@ -19,13 +19,13 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField 'String', 'SERVER_URL', '"https://api.example/"'
+            buildConfigField 'String', 'SERVER_URL', '"https://kubko.herokuapp.com/api/v1/"'
         }
 
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField 'String', 'SERVER_URL', '"https://api.example/"'
+            buildConfigField 'String', 'SERVER_URL', '"https://kubko.herokuapp.com/api/v1/"'
         }
     }
 }
@@ -51,7 +51,7 @@ dependencies {
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'android.arch.lifecycle:reactivestreams:1.1.1'
 
-
+    // DIABETES_M LIBRARY
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation(name:'diabetes_m_addon_api_1.1', ext:'aar')
 

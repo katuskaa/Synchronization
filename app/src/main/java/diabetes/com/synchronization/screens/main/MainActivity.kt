@@ -56,15 +56,15 @@ class MainActivity : BaseApplicationActivity<MainActivity.Parameters, MainActivi
 
         override fun setViewModelsObservers() {
 
-            this.applicationViewModel.exampleLiveData.observe(this@MainActivity, Observer {
+            this.applicationViewModel.getTreatmentsLiveData.observe(this@MainActivity, Observer {
                 it?.let {
                     when (it.resourceStatus) {
                         ResourceStatus.SUCCESS -> {
-                            Toast.makeText(this@MainActivity, "success", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@MainActivity, "getTreatments = success", Toast.LENGTH_SHORT).show()
                         }
 
                         ResourceStatus.ERROR -> {
-                            Toast.makeText(this@MainActivity, "error", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@MainActivity, "getTreatments = error", Toast.LENGTH_SHORT).show()
                         }
 
                         else -> {
@@ -72,6 +72,24 @@ class MainActivity : BaseApplicationActivity<MainActivity.Parameters, MainActivi
                     }
                 }
             })
+
+            this.applicationViewModel.getEntriesLiveData.observe(this@MainActivity, Observer {
+                it?.let {
+                    when (it.resourceStatus) {
+                        ResourceStatus.SUCCESS -> {
+                            Toast.makeText(this@MainActivity, "getEntries = success", Toast.LENGTH_SHORT).show()
+                        }
+
+                        ResourceStatus.ERROR -> {
+                            Toast.makeText(this@MainActivity, "getEntries = error", Toast.LENGTH_SHORT).show()
+                        }
+
+                        else -> {
+                        }
+                    }
+                }
+            })
+
         }
     }
 
@@ -86,7 +104,10 @@ class MainActivity : BaseApplicationActivity<MainActivity.Parameters, MainActivi
     override fun onActivityLoadingFinished() {}
 
     override fun synchronize() {
-        this@MainActivity.viewModels.applicationViewModel.runExampleTransaction()
+        // call a request
+        this@MainActivity.viewModels.applicationViewModel.runGetTreatmentsTransaction(10)
+
+        // this@MainActivity.viewModels.applicationViewModel.runGetEntriesTransaction()
     }
 
     private fun connectionTest() {
