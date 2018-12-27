@@ -43,6 +43,10 @@ class MainFragment : BaseApplicationFragment<MainFragment.Parameters, MainFragme
             synchronizeB.setOnClickListener {
                 this@MainFragment.handler.synchronize()
             }
+
+            diabetesMB.setOnClickListener {
+                this@MainFragment.handler.startDiabetesM()
+            }
         }
 
         override fun modifyFragments(context: Context?) {}

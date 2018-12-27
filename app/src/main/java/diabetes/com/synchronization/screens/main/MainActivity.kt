@@ -1,8 +1,10 @@
 package diabetes.com.synchronization.screens.main
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import com.diabetesm.addons.api.DiabetesAppConnection
@@ -18,6 +20,8 @@ import diabetes.com.synchronization.communication.ApplicationViewModel
 
 class MainActivity : BaseApplicationActivity<MainActivity.Parameters, MainActivity.State, MainActivity.ViewModels, MainActivity.Views>(), MainFragmentHandler {
 
+    lateinit var diabetesAppConnection: DiabetesAppConnection
+
     override fun initializeParameters(): Parameters = Parameters()
     override fun initializeState(parameters: Parameters): State = State()
     override fun initializeViewModels(): ViewModels = ViewModels()
@@ -29,6 +33,9 @@ class MainActivity : BaseApplicationActivity<MainActivity.Parameters, MainActivi
 
 
     inner class Parameters : BaseParameters {
+
+        val ACCESS_REQUEST_CODE: Int = 100
+
         override fun loadParameters(extras: Bundle?) {}
     }
 
@@ -101,20 +108,49 @@ class MainActivity : BaseApplicationActivity<MainActivity.Parameters, MainActivi
         override fun modifyFragments(context: Context?) {}
     }
 
-    override fun onActivityLoadingFinished() {}
+    override fun onActivityLoadingFinished() {
+        diabetesAppConnection = DiabetesAppConnection(this@MainActivity)
+    }
 
     override fun synchronize() {
-        // call a request
         this@MainActivity.viewModels.applicationViewModel.runGetTreatmentsTransaction(10)
-
         // this@MainActivity.viewModels.applicationViewModel.runGetEntriesTransaction()
     }
 
-    private fun connectionTest() {
-        val diabetesAppConnection = DiabetesAppConnection(this@MainActivity)
-
-        val checkStatus = diabetesAppConnection.checkDiabetesMApp()
-        Toast.makeText(this@MainActivity, "checkStatus = $checkStatus", Toast.LENGTH_SHORT).show()
+    override fun startDiabetesM() {
+        if (!diabetesAppConnection.isAuthenticated) {
+            diabetesAppConnection.requestAccess(this@MainActivity, false, this@MainActivity.parameters.ACCESS_REQUEST_CODE)
+        } else {
+            requestData()
+        }
     }
 
+    private fun requestData() {
+        diabetesAppConnection.requestData(DiabetesAppConnection.IResultListener { resultData ->
+            if (resultData.getString(DiabetesAppConnection.RESULT_KEY, "") == DiabetesAppConnection.RESULT_UNAUTHORIZED) {
+                return@IResultListener
+            }
+
+            val configuration = DiabetesAppConnection.getConfiguration(resultData)
+
+            runOnUiThread {
+                Toast.makeText(this@MainActivity, configuration.calibrationGlucose.toString(), Toast.LENGTH_LONG).show()
+            }
+        })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            this@MainActivity.parameters.ACCESS_REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    val diabetesAppConnection = DiabetesAppConnection(this@MainActivity)
+                    val accessPermission = diabetesAppConnection.onActivityResult(resultCode, data)
+
+                    if (accessPermission == DiabetesAppConnection.AccessPermission.GRANTED) {
+                        requestData()
+                    }
+                }
+            }
+        }
+    }
 }
