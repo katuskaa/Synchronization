@@ -11,7 +11,7 @@ import org.json.JSONArray
 
 class GetTreatmentsTransaction(serverUrl: String, requestData: GetTreatmentsRequestData, responseLiveData: MutableLiveData<ResponseLiveData<Array<GetTreatmentsResponseBody>>>) : HttpServerTransaction<Array<GetTreatmentsResponseBody>, ResponseLiveData<Array<GetTreatmentsResponseBody>>>(serverUrl, requestData, responseLiveData) {
 
-    override fun getHttpRequest(): Request<*> = JsonArrayWithJsonObjectRequest(Request.Method.GET, this.serverUrl.plus("treatments?count=").plus((requestData as GetTreatmentsRequestData).count), this.requestData.getRequestBody().toJson(), GetTreatmentsResponseHandler(), BaseApplication.application)
+    override fun getHttpRequest(): Request<*> = JsonArrayWithJsonObjectRequest(Request.Method.GET, this.serverUrl.plus("treatments?count=").plus((requestData as GetTreatmentsRequestData).count), this.requestData.getRequestBody().toJson(), GetTreatmentsResponseHandler())
 
     override fun onLoadingStarted() {
         val responseLiveData = ResponseLiveData<Array<GetTreatmentsResponseBody>>()

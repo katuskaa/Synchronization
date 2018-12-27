@@ -11,7 +11,7 @@ import org.json.JSONObject
 
 class ExampleTransaction(serverUrl: String, requestData: ExampleRequestData, responseLiveData: MutableLiveData<ResponseLiveData<ExampleResponseBody>>) : HttpServerTransaction<ExampleResponseBody, ResponseLiveData<ExampleResponseBody>>(serverUrl, requestData, responseLiveData) {
 
-    override fun getHttpRequest(): Request<*> = JsonObjectRequest(Request.Method.POST, this.serverUrl.plus("examples"), this.requestData.getRequestBody().toJson(), ExampleResponseHandler(), BaseApplication.application)
+    override fun getHttpRequest(): Request<*> = JsonObjectRequest(Request.Method.POST, this.serverUrl.plus("examples"), this.requestData.getRequestBody().toJson(), ExampleResponseHandler())
 
     override fun onLoadingStarted() {
         val responseLiveData = ResponseLiveData<ExampleResponseBody>()
