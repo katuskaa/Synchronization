@@ -1,6 +1,5 @@
 package diabetes.com.synchronization.common.data.http
 
-import android.content.Context
 import com.android.volley.NetworkResponse
 import com.android.volley.ParseError
 import com.android.volley.Response
@@ -12,15 +11,15 @@ import org.json.JSONArray
 import org.json.JSONException
 import java.io.UnsupportedEncodingException
 
-class JsonArrayWithJsonObjectRequest(method: Int, url: String?, requestBody: String?, responseHandler: HttpResponseHandler<*, *>, val context: Context) : JsonRequest<JSONArray>(method, url, requestBody, responseHandler as Response.Listener<JSONArray>, responseHandler as Response.ErrorListener), BaseRequestProperties {
+class JsonArrayWithJsonObjectRequest(method: Int, url: String?, requestBody: String?, responseHandler: HttpResponseHandler<*, *>) : JsonRequest<JSONArray>(method, url, requestBody, responseHandler as Response.Listener<JSONArray>, responseHandler as Response.ErrorListener), BaseRequestProperties {
 
     init {
         this.retryPolicy = this.setupRequestProperties()
     }
 
-//    override fun getHeaders(): MutableMap<String, String> {
-//        return super.getAuthorizationHeader(context)
-//    }
+    override fun getHeaders(): MutableMap<String, String> {
+        return super.getAuthorizationHeader()
+    }
 
     override fun parseNetworkResponse(response: NetworkResponse?): Response<JSONArray> {
         return try {
