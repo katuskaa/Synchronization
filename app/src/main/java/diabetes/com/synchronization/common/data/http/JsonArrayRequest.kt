@@ -12,8 +12,8 @@ class JsonArrayRequest(method: Int, url: String, requestBody: String, responseHa
         this.retryPolicy = this.setupRequestProperties()
     }
 
-    override fun getHeaders(): MutableMap<String, String> {
-        return super.getAuthorizationHeader()
-    }
+//    override fun getHeaders(): MutableMap<String, String> {
+//        return super.getAuthorizationHeader()
+//    }
 
 }

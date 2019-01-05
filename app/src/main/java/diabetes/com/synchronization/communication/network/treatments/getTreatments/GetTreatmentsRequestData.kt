@@ -8,7 +8,6 @@ open class GetTreatmentsRequestData(val count: Int) : RequestData() {
     override fun getRequestBody(): RequestBody = GetTreatmentsRequestBody(this)
 
     class GetTreatmentsRequestBody(requestData: GetTreatmentsRequestData) : RequestBody() {
-
         @SerializedName("count")
         val count = requestData.count
     }

@@ -2,6 +2,7 @@ package diabetes.com.synchronization.communication.network.entries.getEntries
 
 import android.arch.lifecycle.MutableLiveData
 import com.android.volley.Request
+import diabetes.com.synchronization.BuildConfig
 import diabetes.com.synchronization.common.base.application.BaseApplication
 import diabetes.com.synchronization.common.data.http.JsonArrayWithJsonObjectRequest
 import diabetes.com.synchronization.common.data.server.httpChannel.HttpResponseHandler
@@ -11,7 +12,7 @@ import org.json.JSONArray
 
 class GetEntriesTransaction(serverUrl: String, requestData: GetEntriesRequestData, responseLiveData: MutableLiveData<ResponseLiveData<Array<GetEntriesResponseBody>>>) : HttpServerTransaction<Array<GetEntriesResponseBody>, ResponseLiveData<Array<GetEntriesResponseBody>>>(serverUrl, requestData, responseLiveData) {
 
-    override fun getHttpRequest(): Request<*> = JsonArrayWithJsonObjectRequest(Request.Method.GET, this.serverUrl.plus("entries.json"), this.requestData.getRequestBody().toJson(), GetEntriesResponseHandler())
+    override fun getHttpRequest(): Request<*> = JsonArrayWithJsonObjectRequest(Request.Method.GET, this.serverUrl.plus("entries.json?token=").plus(BuildConfig.SERVER_URL_TOKEN), this.requestData.getRequestBody().toJson(), GetEntriesResponseHandler())
 
     override fun onLoadingStarted() {
         val responseLiveData = ResponseLiveData<Array<GetEntriesResponseBody>>()

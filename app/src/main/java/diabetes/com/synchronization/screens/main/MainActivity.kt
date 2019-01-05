@@ -112,9 +112,16 @@ class MainActivity : BaseApplicationActivity<MainActivity.Parameters, MainActivi
         diabetesAppConnection = DiabetesAppConnection(this@MainActivity)
     }
 
-    override fun synchronize() {
-        this@MainActivity.viewModels.applicationViewModel.runGetTreatmentsTransaction(10)
-        // this@MainActivity.viewModels.applicationViewModel.runGetEntriesTransaction()
+    override fun postTreatment() {
+        this@MainActivity.viewModels.applicationViewModel.runPostTreatmentTransaction()
+    }
+
+    override fun deleteTreatment() {
+        this@MainActivity.viewModels.applicationViewModel.runDeleteTreatmentTransaction()
+    }
+
+    override fun getTreatments() {
+        this@MainActivity.viewModels.applicationViewModel.runGetTreatmentsTransaction(20)
     }
 
     override fun startDiabetesM() {

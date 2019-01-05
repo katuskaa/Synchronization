@@ -20,12 +20,16 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'String', 'SERVER_URL', '"https://kubko.herokuapp.com/api/v1/"'
+            buildConfigField 'String', 'SERVER_URL_TOKEN', '"katuska-e463e354512cda93"'
+            buildConfigField 'String', 'SERVER_TOKEN', '"JWT token"'
         }
 
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'String', 'SERVER_URL', '"https://kubko.herokuapp.com/api/v1/"'
+            buildConfigField 'String', 'SERVER_URL_TOKEN', '"katuska-e463e354512cda93"'
+            buildConfigField 'String', 'SERVER_TOKEN', '"JWT token"'
         }
     }
 }
