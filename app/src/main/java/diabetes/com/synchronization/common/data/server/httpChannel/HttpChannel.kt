@@ -18,7 +18,6 @@ class HttpChannel : CommunicationChannel {
     private var requestQueue: RequestQueue? = null
 
     override fun initializeCommunicationChannel(context: Context, serverUrl: String) {
-
         val httpCache = HttpCache(context)
         val network = BasicNetwork(CustomHurlStack())
         this.requestQueue = RequestQueue(httpCache.cache, network)
@@ -31,6 +30,7 @@ class HttpChannel : CommunicationChannel {
 
     override fun sendMessage(serverTransaction: ServerTransaction<*, *>) {
         val httpServerTransaction: HttpServerTransaction<*, *> = (serverTransaction as HttpServerTransaction<*, *>)
+        this.requestQueue?.cache?.clear()
         this.requestQueue?.add(httpServerTransaction.request)
     }
 
@@ -44,7 +44,6 @@ class HttpChannel : CommunicationChannel {
         val cache: Cache
 
         init {
-
             val internalApplicationFolder = getInternalStorageApplicationCacheFolder(context)
             val cacheFile = File(internalApplicationFolder, "volleyCache")
             this.cache = DiskBasedCache(cacheFile, CACHE_SIZE)
