@@ -32,7 +32,7 @@ class ApplicationViewModel : ViewModel() {
     }
 
     fun runDeleteTreatmentTransaction() {
-        val requestData = DeleteTreatmentRequestData("5c309bc028c9a813c819d0a6")
+        val requestData = DeleteTreatmentRequestData("5c312c5e28c9a813c81e1a87")
         BaseApplication.applicationServer.executeDeleteTreatmentTransaction(requestData, deleteTreatmentLiveData)
     }
 
