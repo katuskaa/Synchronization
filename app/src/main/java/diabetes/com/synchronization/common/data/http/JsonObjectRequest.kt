@@ -12,8 +12,8 @@ class JsonObjectRequest(method: Int, url: String, requestBody: String, responseH
         this.retryPolicy = this.setupRequestProperties()
     }
 
-    override fun getHeaders(): MutableMap<String, String> {
-        return super.getAuthorizationHeader()
-    }
+//    override fun getHeaders(): MutableMap<String, String> {
+//        return super.getAuthorizationHeader()
+//    }
 
 }

@@ -8,21 +8,28 @@ import diabetes.com.synchronization.common.data.transaction.ResponseLiveData
 import diabetes.com.synchronization.communication.network.entries.getEntries.GetEntriesRequestData
 import diabetes.com.synchronization.communication.network.entries.getEntries.GetEntriesResponseBody
 import diabetes.com.synchronization.communication.network.entries.getEntries.GetEntriesTransaction
-import diabetes.com.synchronization.communication.network.example.ExampleRequestData
-import diabetes.com.synchronization.communication.network.example.ExampleResponseBody
-import diabetes.com.synchronization.communication.network.example.ExampleTransaction
+import diabetes.com.synchronization.communication.network.treatments.deleteTreatment.DeleteTreatmentRequestData
+import diabetes.com.synchronization.communication.network.treatments.deleteTreatment.DeleteTreatmentResponseBody
+import diabetes.com.synchronization.communication.network.treatments.deleteTreatment.DeleteTreatmentTransaction
 import diabetes.com.synchronization.communication.network.treatments.getTreatments.GetTreatmentsRequestData
 import diabetes.com.synchronization.communication.network.treatments.getTreatments.GetTreatmentsResponseBody
 import diabetes.com.synchronization.communication.network.treatments.getTreatments.GetTreatmentsTransaction
+import diabetes.com.synchronization.communication.network.treatments.postTreatment.PostTreatmentRequestData
+import diabetes.com.synchronization.communication.network.treatments.postTreatment.PostTreatmentResponseBody
+import diabetes.com.synchronization.communication.network.treatments.postTreatment.PostTreatmentTransaction
 
 class ApplicationServer(override val httpChannel: CommunicationChannel) : Server(BuildConfig.SERVER_URL) {
 
-    fun executeExampleTransaction(requestData: ExampleRequestData, liveData: MutableLiveData<ResponseLiveData<ExampleResponseBody>>) {
-        super.executeTransaction(ExampleTransaction(this.serverUrl, requestData, liveData))
-    }
-
     fun executeGetTreatmentsTransaction(requestData: GetTreatmentsRequestData, liveData: MutableLiveData<ResponseLiveData<Array<GetTreatmentsResponseBody>>>) {
         super.executeTransaction(GetTreatmentsTransaction(this.serverUrl, requestData, liveData))
+    }
+
+    fun executePostTreatmentTransaction(requestData: PostTreatmentRequestData, liveData: MutableLiveData<ResponseLiveData<Array<PostTreatmentResponseBody>>>) {
+        super.executeTransaction(PostTreatmentTransaction(this.serverUrl, requestData, liveData))
+    }
+
+    fun executeDeleteTreatmentTransaction(requestData: DeleteTreatmentRequestData, liveData: MutableLiveData<ResponseLiveData<DeleteTreatmentResponseBody>>) {
+        super.executeTransaction(DeleteTreatmentTransaction(this.serverUrl, requestData, liveData))
     }
 
     fun executeGetEntriesTransaction(requestData: GetEntriesRequestData, liveData: MutableLiveData<ResponseLiveData<Array<GetEntriesResponseBody>>>) {

@@ -6,25 +6,34 @@ import diabetes.com.synchronization.common.base.application.BaseApplication
 import diabetes.com.synchronization.common.data.transaction.ResponseLiveData
 import diabetes.com.synchronization.communication.network.entries.getEntries.GetEntriesRequestData
 import diabetes.com.synchronization.communication.network.entries.getEntries.GetEntriesResponseBody
-import diabetes.com.synchronization.communication.network.example.ExampleRequestData
-import diabetes.com.synchronization.communication.network.example.ExampleResponseBody
+import diabetes.com.synchronization.communication.network.treatments.deleteTreatment.DeleteTreatmentRequestData
+import diabetes.com.synchronization.communication.network.treatments.deleteTreatment.DeleteTreatmentResponseBody
 import diabetes.com.synchronization.communication.network.treatments.getTreatments.GetTreatmentsRequestData
 import diabetes.com.synchronization.communication.network.treatments.getTreatments.GetTreatmentsResponseBody
+import diabetes.com.synchronization.communication.network.treatments.postTreatment.PostTreatmentRequestData
+import diabetes.com.synchronization.communication.network.treatments.postTreatment.PostTreatmentResponseBody
+import java.util.*
 
 class ApplicationViewModel : ViewModel() {
 
-    val exampleLiveData = MutableLiveData<ResponseLiveData<ExampleResponseBody>>()
     val getTreatmentsLiveData = MutableLiveData<ResponseLiveData<Array<GetTreatmentsResponseBody>>>()
+    val postTreatmentLiveData = MutableLiveData<ResponseLiveData<Array<PostTreatmentResponseBody>>>()
+    val deleteTreatmentLiveData = MutableLiveData<ResponseLiveData<DeleteTreatmentResponseBody>>()
     val getEntriesLiveData = MutableLiveData<ResponseLiveData<Array<GetEntriesResponseBody>>>()
-
-    fun runExampleTransaction() {
-        val requestData = ExampleRequestData("example")
-        BaseApplication.applicationServer.executeExampleTransaction(requestData, exampleLiveData)
-    }
 
     fun runGetTreatmentsTransaction(count: Int) {
         val requestData = GetTreatmentsRequestData(count)
         BaseApplication.applicationServer.executeGetTreatmentsTransaction(requestData, getTreatmentsLiveData)
+    }
+
+    fun runPostTreatmentTransaction() {
+        val requestData = PostTreatmentRequestData("", "Meal Bolus", "", 0, 0, Date(), 2.5f, "test poznamky")
+        BaseApplication.applicationServer.executePostTreatmentTransaction(requestData, postTreatmentLiveData)
+    }
+
+    fun runDeleteTreatmentTransaction() {
+        val requestData = DeleteTreatmentRequestData("5c309bc028c9a813c819d0a6")
+        BaseApplication.applicationServer.executeDeleteTreatmentTransaction(requestData, deleteTreatmentLiveData)
     }
 
     fun runGetEntriesTransaction() {

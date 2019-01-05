@@ -40,8 +40,16 @@ class MainFragment : BaseApplicationFragment<MainFragment.Parameters, MainFragme
     inner class Views : BaseViews {
 
         override fun modifyViews(context: Context?, bundle: Bundle?) {
-            synchronizeB.setOnClickListener {
-                this@MainFragment.handler.synchronize()
+            postTreatmentB.setOnClickListener {
+                this@MainFragment.handler.postTreatment()
+            }
+
+            deleteTreatmentB.setOnClickListener {
+                this@MainFragment.handler.deleteTreatment()
+            }
+
+            getTreatmentsB.setOnClickListener {
+                this@MainFragment.handler.getTreatments()
             }
 
             diabetesMB.setOnClickListener {

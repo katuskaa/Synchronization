@@ -17,9 +17,9 @@ class JsonArrayWithJsonObjectRequest(method: Int, url: String?, requestBody: Str
         this.retryPolicy = this.setupRequestProperties()
     }
 
-    override fun getHeaders(): MutableMap<String, String> {
-        return super.getAuthorizationHeader()
-    }
+//    override fun getHeaders(): MutableMap<String, String> {
+//        return super.getAuthorizationHeader()
+//    }
 
     override fun parseNetworkResponse(response: NetworkResponse?): Response<JSONArray> {
         return try {

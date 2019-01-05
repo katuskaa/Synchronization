@@ -2,6 +2,7 @@ package diabetes.com.synchronization.communication.network.treatments.getTreatme
 
 import android.arch.lifecycle.MutableLiveData
 import com.android.volley.Request
+import diabetes.com.synchronization.BuildConfig
 import diabetes.com.synchronization.common.base.application.BaseApplication
 import diabetes.com.synchronization.common.data.http.JsonArrayWithJsonObjectRequest
 import diabetes.com.synchronization.common.data.server.httpChannel.HttpResponseHandler
@@ -11,7 +12,7 @@ import org.json.JSONArray
 
 class GetTreatmentsTransaction(serverUrl: String, requestData: GetTreatmentsRequestData, responseLiveData: MutableLiveData<ResponseLiveData<Array<GetTreatmentsResponseBody>>>) : HttpServerTransaction<Array<GetTreatmentsResponseBody>, ResponseLiveData<Array<GetTreatmentsResponseBody>>>(serverUrl, requestData, responseLiveData) {
 
-    override fun getHttpRequest(): Request<*> = JsonArrayWithJsonObjectRequest(Request.Method.GET, this.serverUrl.plus("treatments?count=").plus((requestData as GetTreatmentsRequestData).count), this.requestData.getRequestBody().toJson(), GetTreatmentsResponseHandler())
+    override fun getHttpRequest(): Request<*> = JsonArrayWithJsonObjectRequest(Request.Method.GET, this.serverUrl.plus("treatments?token=").plus(BuildConfig.SERVER_URL_TOKEN).plus("&count=").plus((requestData as GetTreatmentsRequestData).count), this.requestData.getRequestBody().toJson(), GetTreatmentsResponseHandler())
 
     override fun onLoadingStarted() {
         val responseLiveData = ResponseLiveData<Array<GetTreatmentsResponseBody>>()

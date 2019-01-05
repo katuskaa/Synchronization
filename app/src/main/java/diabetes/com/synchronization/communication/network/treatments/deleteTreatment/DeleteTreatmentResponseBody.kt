@@ -1,0 +1,3 @@
+package diabetes.com.synchronization.communication.network.treatments.deleteTreatment
+
+open class DeleteTreatmentResponseBody
