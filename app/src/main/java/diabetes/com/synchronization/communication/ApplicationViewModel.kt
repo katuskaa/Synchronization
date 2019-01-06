@@ -27,12 +27,13 @@ class ApplicationViewModel : ViewModel() {
     }
 
     fun runPostTreatmentTransaction() {
+        val date = getISO_8601Date()
         val requestData = PostTreatmentRequestData("", "Meal Bolus", "", 0, 0, getISO_8601Date(), 2.5f, "test poznamky")
         BaseApplication.applicationServer.executePostTreatmentTransaction(requestData, postTreatmentLiveData)
     }
 
     fun runDeleteTreatmentTransaction() {
-        val requestData = DeleteTreatmentRequestData("5c314f3c28c9a813c81f4133")
+        val requestData = DeleteTreatmentRequestData("5c31619728c9a813c81fd4ef")
         BaseApplication.applicationServer.executeDeleteTreatmentTransaction(requestData, deleteTreatmentLiveData)
     }
 
