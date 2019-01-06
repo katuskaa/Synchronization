@@ -2,9 +2,8 @@ package diabetes.com.synchronization.communication.network.treatments.postTreatm
 
 import com.google.gson.annotations.SerializedName
 import diabetes.com.synchronization.common.data.transaction.RequestData
-import java.util.*
 
-open class PostTreatmentRequestData(val enteredBy: String, val eventType: String, val reason: String, val carbs: Int, val duration: Int, val createdAt: Date, val insulin: Float, val notes: String) : RequestData() {
+open class PostTreatmentRequestData(val enteredBy: String, val eventType: String, val reason: String, val carbs: Int, val duration: Int, val createdAt: String, val insulin: Float, val notes: String) : RequestData() {
 
     override fun getRequestBody(): RequestBody = PostTreatmentRequestBody(this)
 
