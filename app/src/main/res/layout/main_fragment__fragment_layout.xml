@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -14,28 +15,43 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
+            android:id="@+id/importDiabetesMTreatmentsB"
+            android:layout_width="match_parent"
+            android:layout_height="59dp"
+            android:text="@string/main__importDiabetesMTreatments"
+            android:textAllCaps="false" />
+
+        <Button
             android:id="@+id/postTreatmentB"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:text="@string/main__postTreatment" />
+            android:text="@string/main__postTreatment"
+            android:textAllCaps="false"
+            />
 
         <Button
             android:id="@+id/deleteTreatmentB"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:text="@string/main__deleteTreatment" />
+            android:text="@string/main__deleteTreatment"
+            android:textAllCaps="false"
+            />
 
         <Button
             android:id="@+id/getTreatmentsB"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:text="@string/main__getTreatments" />
+            android:text="@string/main__getTreatments"
+            android:textAllCaps="false"
+            />
 
         <Button
             android:id="@+id/diabetesMB"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:text="@string/main__diabetesM" />
+            android:text="@string/main__diabetesM"
+            android:textAllCaps="false"
+            />
 
     </LinearLayout>
 

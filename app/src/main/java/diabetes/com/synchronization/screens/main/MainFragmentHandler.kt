@@ -9,4 +9,6 @@ interface MainFragmentHandler {
     fun getTreatments()
 
     fun startDiabetesM()
+
+    fun importDiabetesMTreatments()
 }

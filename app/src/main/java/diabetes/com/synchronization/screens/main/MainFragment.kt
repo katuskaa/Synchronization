@@ -40,6 +40,10 @@ class MainFragment : BaseApplicationFragment<MainFragment.Parameters, MainFragme
     inner class Views : BaseViews {
 
         override fun modifyViews(context: Context?, bundle: Bundle?) {
+            importDiabetesMTreatmentsB.setOnClickListener {
+                this@MainFragment.handler.importDiabetesMTreatments()
+            }
+
             postTreatmentB.setOnClickListener {
                 this@MainFragment.handler.postTreatment()
             }

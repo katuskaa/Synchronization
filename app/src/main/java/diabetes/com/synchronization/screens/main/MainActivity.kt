@@ -16,6 +16,7 @@ import diabetes.com.synchronization.common.base.views.BaseViewModels
 import diabetes.com.synchronization.common.base.views.BaseViews
 import diabetes.com.synchronization.common.data.transaction.ResourceStatus
 import diabetes.com.synchronization.communication.ApplicationViewModel
+import diabetes.com.synchronization.diabetesm.csv.readEntries.readDiabetesMCSVFile
 
 
 class MainActivity : BaseApplicationActivity<MainActivity.Parameters, MainActivity.State, MainActivity.ViewModels, MainActivity.Views>(), MainFragmentHandler {
@@ -110,6 +111,10 @@ class MainActivity : BaseApplicationActivity<MainActivity.Parameters, MainActivi
 
     override fun onActivityLoadingFinished() {
         diabetesAppConnection = DiabetesAppConnection(this@MainActivity)
+    }
+
+    override fun importDiabetesMTreatments() {
+        readDiabetesMCSVFile(1)
     }
 
     override fun postTreatment() {

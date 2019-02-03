@@ -5,6 +5,7 @@
     <string name="main__synchronize">Synchronize</string>
     <string name="main__diabetesM">DiabetesM</string>
 
+    <string name="main__importDiabetesMTreatments">Import Diabetes:M Treatments</string>
     <string name="main__getTreatments">Get treatments</string>
     <string name="main__postTreatment">Post treatment</string>
     <string name="main__deleteTreatment">Delete treatment</string>

@@ -27,7 +27,6 @@ class ApplicationViewModel : ViewModel() {
     }
 
     fun runPostTreatmentTransaction() {
-        val date = getISO_8601Date()
         val requestData = PostTreatmentRequestData("", "Meal Bolus", "", 0, 0, getISO_8601Date(), 2.5f, "test poznamky")
         BaseApplication.applicationServer.executePostTreatmentTransaction(requestData, postTreatmentLiveData)
     }
