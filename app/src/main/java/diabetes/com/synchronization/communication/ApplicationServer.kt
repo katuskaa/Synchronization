@@ -17,6 +17,9 @@ import diabetes.com.synchronization.communication.network.treatments.getTreatmen
 import diabetes.com.synchronization.communication.network.treatments.postTreatment.PostTreatmentRequestData
 import diabetes.com.synchronization.communication.network.treatments.postTreatment.PostTreatmentResponseBody
 import diabetes.com.synchronization.communication.network.treatments.postTreatment.PostTreatmentTransaction
+import diabetes.com.synchronization.communication.network.treatments.updateTreatment.UpdateTreatmentRequestData
+import diabetes.com.synchronization.communication.network.treatments.updateTreatment.UpdateTreatmentResponseBody
+import diabetes.com.synchronization.communication.network.treatments.updateTreatment.UpdateTreatmentTransaction
 
 class ApplicationServer(override val httpChannel: CommunicationChannel) : Server(BuildConfig.SERVER_URL) {
 
@@ -26,6 +29,10 @@ class ApplicationServer(override val httpChannel: CommunicationChannel) : Server
 
     fun executePostTreatmentTransaction(requestData: PostTreatmentRequestData, liveData: MutableLiveData<ResponseLiveData<Array<PostTreatmentResponseBody>>>) {
         super.executeTransaction(PostTreatmentTransaction(this.serverUrl, requestData, liveData))
+    }
+
+    fun executeUpdateTreatmentTransaction(requestData: UpdateTreatmentRequestData, liveData: MutableLiveData<ResponseLiveData<Array<UpdateTreatmentResponseBody>>>) {
+        super.executeTransaction(UpdateTreatmentTransaction(this.serverUrl, requestData, liveData))
     }
 
     fun executeDeleteTreatmentTransaction(requestData: DeleteTreatmentRequestData, liveData: MutableLiveData<ResponseLiveData<DeleteTreatmentResponseBody>>) {

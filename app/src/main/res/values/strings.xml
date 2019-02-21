@@ -1,12 +1,25 @@
 <resources>
     <string name="app_name">Synchronization</string>
 
+    <!--STARTER AND PERMISSIONS-->
+    <string name="starter_and_permissions__accept">Accept</string>
+    <string name="starter_and_permissions__allow_permissions">Please allow permissions</string>
+
     <!--MAIN-->
     <string name="main__synchronize">Synchronize</string>
     <string name="main__diabetesM">DiabetesM</string>
 
     <string name="main__importDiabetesMTreatments">Import Diabetes:M Treatments</string>
-    <string name="main__getTreatments">Get treatments</string>
-    <string name="main__postTreatment">Post treatment</string>
-    <string name="main__deleteTreatment">Delete treatment</string>
+    <string name="main__no_file_found">No file found</string>
+    <string name="main__success">Successfully updated</string>
+    <string name="main__get_treatments_failed">Get treatments request failed</string>
+    <string name="main__post_treatment_failed">Post treatment request failed</string>
+
+    <!--DIALOG-->
+    <string name="dialog__title">Load data from</string>
+    <string name="dialog__checkbox">Delete older exports</string>
+    <string name="dialog__ok">OK</string>
+    <string name="dialog__select_option">Please select one option</string>
+
+
 </resources>

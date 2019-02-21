@@ -2,13 +2,6 @@ package diabetes.com.synchronization.screens.main
 
 interface MainFragmentHandler {
 
-    fun postTreatment()
+    fun importDiabetesMTreatments(interval: Int)
 
-    fun deleteTreatment()
-
-    fun getTreatments()
-
-    fun startDiabetesM()
-
-    fun importDiabetesMTreatments()
 }

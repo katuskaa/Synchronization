@@ -6,10 +6,10 @@
     tools:context=".screens.main.MainActivity">
 
     <fragment
-        android:id="@+id/mainF"
-        android:name="diabetes.com.synchronization.screens.main.MainFragment"
+        android:id="@+id/starterAndPermissionsF"
+        android:name="diabetes.com.synchronization.screens.starterAndPermissions.StarterAndPermissionsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/main_fragment__fragment_layout" />
+        tools:layout="@layout/starter_and_permissions_fragment__fragment_layout" />
 
 </android.support.constraint.ConstraintLayout>

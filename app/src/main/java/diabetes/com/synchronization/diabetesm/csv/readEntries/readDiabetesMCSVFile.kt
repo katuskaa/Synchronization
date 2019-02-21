@@ -1,23 +1,16 @@
 package diabetes.com.synchronization.diabetesm.csv.readEntries
 
-import android.Manifest
-import android.app.Activity
 import android.arch.lifecycle.MutableLiveData
 import android.os.Environment
-import android.os.FileObserver.CREATE
-import diabetes.com.synchronization.common.helpers.verifyStoragePermissions
-import java.io.*
-import java.nio.file.Files
-import java.nio.file.Path
-import android.provider.Settings.System.canWrite
-import diabetes.com.synchronization.BuildConfig
 import diabetes.com.synchronization.common.base.application.BaseApplication
 import diabetes.com.synchronization.common.data.transaction.ResponseLiveData
-import diabetes.com.synchronization.common.helpers.getISO_8601Date
+import diabetes.com.synchronization.common.helpers.convertDiabetesMDateToISO8601
+import diabetes.com.synchronization.common.helpers.getEnteredBy
 import diabetes.com.synchronization.communication.network.treatments.postTreatment.PostTreatmentRequestData
 import diabetes.com.synchronization.communication.network.treatments.postTreatment.PostTreatmentResponseBody
-import org.intellij.lang.annotations.RegExp
-import java.util.regex.Pattern
+import java.io.BufferedReader
+import java.io.FileReader
+import java.io.IOException
 
 /**
  *  0   "DateTimeFormatted",                     "2019-01-19 12:50:00"                   (localtime)
@@ -26,7 +19,7 @@ import java.util.regex.Pattern
  *      "proteins",
  *      "fats",
  *      "calories",
- *  6   "carb_bolus",                            "3.5"
+ *  6   "carbBolus",                            "3.5"
  *      "correction_bolus",
  *      "extended_bolus",
  *      "extended_bolus_duration",
@@ -88,7 +81,7 @@ import java.util.regex.Pattern
  *  0   "DateTimeFormatted",                     "2019-01-19 12:50:00"                   (localtime Europe/Bratislava CET UTC+1)
  *  1   "glucose",                               "13.7"
  *  2   "carbs",                                 "45.0"
- *  6   "carb_bolus",                            "3.5"
+ *  6   "carbBolus",                            "3.5"
  * 10   "basal",                                 "7.0"
  * 12   "bolus_insulin_type",                    "15"                                    (Actrapid)
  * 13   "basal_insulin_type",                    "14"                                    (Insulatard)
@@ -106,7 +99,7 @@ open class readDiabetesMCSVFile(val countOfDays: Int) {
     *      "proteins",
     *      "fats",
     *      "calories",
-    *  7   "carb_bolus",                            "3.5"
+ *  7   "carbBolus",                            "3.5"
     *      "correction_bolus",
     *      "extended_bolus",
     *      "extended_bolus_duration",
@@ -193,34 +186,26 @@ open class readDiabetesMCSVFile(val countOfDays: Int) {
                     val diabetesMDateTimeFormatted  = tokens[CSVIDX_DateTimeFormatted]
                     val diabetesMTimeZone           = tokens[CSVIDX_timezone]
                     val diabetesMCarb_bolus         = tokens[CSVIDX_carb_bolus].toFloat()
-                    val diabetesMCarbs              = tokens[CSVIDX_carbs].toFloat().toInt()
+                    val diabetesMCarbs = tokens[CSVIDX_carbs].toFloat()
                     val diabetesMNotes              = tokens[CSVIDX_notes]
-                    if(diabetesMDateTimeFormatted.compareTo("2019-01-12") > 0)
-                    {
-                        val iso8601date = getISO_8601Date(diabetesMDateTimeFormatted, diabetesMTimeZone)
-                        if(diabetesMCarb_bolus > 0.0f) {
-                            println("carb_bolus: " + tokens[CSVIDX_carb_bolus] + " line: " + line);
-                            val postTreatmentRequestData = PostTreatmentRequestData(
-                                    BuildConfig.SERVER_URL_TOKEN.split("-")[0],
-                                    "Meal Bolus",
-                                    "",
-                                    0,
-                                    0,
+
+                    if (diabetesMDateTimeFormatted.compareTo("2019-01-12") > 0) {
+                        val iso8601date = convertDiabetesMDateToISO8601(diabetesMDateTimeFormatted, diabetesMTimeZone)
+
+                        if (diabetesMCarb_bolus > 0.0f) {
+                            println("carbBolus: " + tokens[CSVIDX_carb_bolus] + " line: " + line);
+                            val postTreatmentRequestData = PostTreatmentRequestData(getEnteredBy(), EventType.MEAL_BOLUS.type, 0.0f,
                                     iso8601date,
                                     diabetesMCarb_bolus,
                                     "")
                             //postTreatmentRequestDatas.add(postTreatmentRequestData)
                             BaseApplication.applicationServer.executePostTreatmentTransaction(postTreatmentRequestData, postTreatmentLiveData)
                         }
-                        if (diabetesMCarbs > 0)
-                        {
+
+                        if (diabetesMCarbs > 0) {
                             println("carbs: " + tokens[CSVIDX_carbs] + " line: " + line);
-                            val postTreatmentRequestData = PostTreatmentRequestData(
-                                    BuildConfig.SERVER_URL_TOKEN.split("-")[0],
-                                    "Carb Correction",
-                                    "",
+                            val postTreatmentRequestData = PostTreatmentRequestData(getEnteredBy(), EventType.CARB_CORRECTION.type,
                                     diabetesMCarbs,
-                                    0,
                                     iso8601date,
                                     0.0f,
                                     diabetesMNotes)
